@@ -6,6 +6,7 @@ Each folder in this repo is one self-contained component, so you can install onl
 > These are personal configs. Read a file before you use it, and back up your existing `~/.config` first.
 ---
 ## screenshots
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/361105ab-2b00-4d8c-8f01-cb7511649959" />
 <img width="1600" height="899" alt="image" src="https://github.com/user-attachments/assets/1f25a9fe-c04b-4dc1-b39a-ad1c06b58d0b" />
 <img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/b7b0c242-0d1c-47cf-8c6c-b2dc04b4b0db" />
 
