@@ -60,6 +60,8 @@ dotfiles/
 │       └── theme.toml
 ├── nvim/
 │   └── .config/nvim/
+├── wallpaper/
+│   └── just my wallpaper choice :)
 └── README.md
 ```
 
