@@ -1,0 +1,106 @@
+[global]
+
+    # ──────────────── Position ────────────────
+
+    monitor = 0
+    follow = mouse
+
+    origin = top-right
+    offset = 18x18
+
+    # ──────────────── Size ────────────────────
+
+    width = 380
+    height = 120
+
+    notification_limit = 5
+
+    # ──────────────── Appearance ─────────────
+
+    font = JetBrainsMono Nerd Font 14
+
+    markup = full
+
+    format = "<b>%s</b>\n%b"
+
+    alignment = left
+    vertical_alignment = center
+
+    word_wrap = yes
+    ignore_newline = no
+
+    padding = 14
+    horizontal_padding = 16
+
+    frame_width = 4
+    frame_color = "#a7c080"
+
+    corner_radius = 12
+
+    separator_height = 1
+    separator_color = "#475258"
+
+    # ──────────────── Icons ───────────────────
+
+    icon_position = left
+    max_icon_size = 40
+
+    # ──────────────── Behaviour ──────────────
+
+    sort = urgency_descending
+
+    indicate_hidden = yes
+
+    stack_duplicates = true
+    hide_duplicate_count = false
+
+    show_indicators = true
+
+    idle_threshold = 0
+
+    # Wayland
+    layer = overlay
+
+    # ──────────────── Mouse ───────────────────
+
+    mouse_left_click = close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_all
+
+# ╭─────────────────────────────────────────────╮
+# │ LOW                                         │
+# ╰─────────────────────────────────────────────╯
+
+[urgency_low]
+
+    background = "#293136CC"
+    foreground = "#859289"
+    frame_color = "#475258CC"
+
+    timeout = 4
+
+
+# ╭─────────────────────────────────────────────╮
+# │ NORMAL                                      │
+# ╰─────────────────────────────────────────────╯
+
+[urgency_normal]
+
+    background = "#2d353BCC"
+    foreground = "#d3c6aa"
+    frame_color = "#a7c080CC"
+
+    timeout = 5
+
+
+# ╭─────────────────────────────────────────────╮
+# │ CRITICAL                                    │
+# ╰─────────────────────────────────────────────╯
+
+[urgency_critical]
+
+    background = "#3d2b2ECC"
+    foreground = "#d3c6aa"
+    frame_color = "#e67e80CC"
+
+    timeout = 0

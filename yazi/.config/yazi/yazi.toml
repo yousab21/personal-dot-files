@@ -1,0 +1,5 @@
+# [mgr] holds general file-manager behavior settings.
+# show_hidden controls whether dotfiles are visible on startup,
+# rather than requiring the runtime toggle (default keybind: zh) every session
+[mgr]
+show_hidden = true

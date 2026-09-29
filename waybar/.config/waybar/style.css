@@ -1,0 +1,110 @@
+
+/* ============================================================
+   WAYBAR VISUAL STYLING — Everforest Dark Medium
+   Same palette as your hyprlock/wofi configs, for consistency.
+
+   bg0   #2d353b   -- bar background
+   bg1   #343f44   -- module hover background
+   bg2   #3d484d   -- active workspace circle fill
+   fg    #d3c6aa   -- primary text
+   green #a7c080   -- accent border / active state
+   red   #e67e80   -- critical battery warning
+   yellow #dbbc7f  -- battery warning (not critical yet)
+   grey1 #859289   -- inactive/dot color
+   ============================================================ */
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 14px;
+    /* No default GTK margins/padding leaking in and breaking the "one solid bar" look */
+    margin: 0;
+    padding: 0;
+}
+
+/* THE OUTER BAR ITSELF — this is what makes it one solid rounded rectangle
+   rather than a segmented panel. All modules sit transparently inside this. */
+window#waybar {
+    background-color: rgba(45, 53, 59, 0.75); /* bg0 at 75% — transparent as requested */
+    border: 4px solid rgba(167, 192, 128, 0.4); /* green outline, itself semi-transparent too */
+    border-radius: 14px;
+    color: #d3c6aa; /* fg, default text color for anything not overridden below */
+}
+
+/* ---------------- WORKSPACES ---------------- */
+
+#workspaces button {
+    /* Base state for every workspace pill/dot before active/hover overrides apply */
+    padding: 0 6px;
+    margin: 4px 4px;
+    background-color: transparent;
+    color: transparent; /* hide the {id} number by default — non-active = dot only */
+    border-radius: 50%; /* circular, not square */
+    min-width: 12px;
+    min-height: 12px;
+    transition: all 200ms ease-in-out; /* smooth grow/color-shift, same trick as wofi's hover */
+}
+
+/* Non-active workspace = small solid dot (using a background instead of text,
+   since we hid the number text above) */
+#workspaces button {
+    background-color: #859289; /* grey1 dot for "this workspace exists but isn't focused" */
+    opacity: 0.6;
+}
+
+/* ACTIVE workspace = bigger circle, shows its number, semi-transparent green fill,
+   exactly as you described */
+#workspaces button.active {
+    background-color: rgba(167, 192, 128, 0.35); /* green, semi-transparent */
+    border: 1px solid #a7c080;
+    color: #d3c6aa; /* reveal the number text now */
+    opacity: 1;
+    min-width: 12px;
+    min-height: 12px;
+    font-weight: bold;
+}
+
+#workspaces button:hover {
+    background-color: rgba(167, 192, 128, 0.2);
+}
+
+/* ---------------- SHARED MODULE SPACING ---------------- */
+/* Deliberately NOT giving each module its own background/border —
+   that's what keeps this a single unbroken bar instead of separate pill segments. */
+#clock,
+#pulseaudio,
+#battery,
+#network,
+#custom-power {
+    padding: 0 12px;
+    transition: background-color 150ms ease-in-out;
+}
+
+/* Subtle hover feedback per-module without breaking the "one bar" look —
+   just a soft highlight, no border/shape change */
+#clock:hover,
+#pulseaudio:hover,
+#battery:hover,
+#network:hover,
+#custom-power:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+/* ---------------- BATTERY STATE COLORS ---------------- */
+#battery.warning {
+    color: #dbbc7f; /* yellow */
+}
+#battery.critical {
+    color: #e67e80; /* red */
+    /* Gentle pulse so critical battery is hard to miss without being obnoxious */
+    animation: blink 2s ease-in-out infinite;
+}
+
+/* ---------------- POWER MODULE IDLE-LOCK INDICATOR ---------------- */
+/* Matches the two states power-status.sh can output (see script below) */
+#custom-power.idle-enabled {
+    color: #a7c080; /* green = protected */
+}
+#custom-power.idle-disabled {
+    color: #e67e80; /* red = you turned off auto-lock, don't forget it's off */
+}

@@ -1,0 +1,75 @@
+# ============================================================
+# WOFI BEHAVIOR CONFIG
+# This file controls FUNCTIONALITY (what wofi does), not looks.
+# All visual styling (colors, fonts, borders) lives in style.css instead.
+# ============================================================
+
+# Which mode wofi opens in by default when launched with no arguments.
+# Options: run | drun | dmenu
+#   run  = searches $PATH binaries only, no .desktop file parsing (no icons, faster)
+#   drun = searches .desktop application entries (icons, proper app names) <- what you want
+#   dmenu = generic mode, feeds/reads from stdin (used for scripts, power menus, etc.)
+mode=drun
+
+# Number of visible entries in the results list before it scrolls.
+# Lower = more compact window; higher = see more results at once without scrolling.
+lines=8
+
+# Width and height of the wofi window.
+# Accepts px (e.g. 600) or percentage of screen (e.g. 30%).
+width=600
+height=400
+
+# Where on screen wofi appears.
+# Options: top_left | top | top_right | left | center | right | bottom_left | bottom | bottom_right
+location=center
+
+# Distance in pixels from the location anchor (only matters if location isn't "center").
+# Irrelevant here since we're centered, but harmless to leave at 0.
+
+# Show a border around each individual entry in the results list.
+# true = every result row gets its own visible outline (busier look)
+# false = clean, only the outer window has an outline <- matches "clean outline" look you want
+entry_border=false
+
+# Rounds the corners of the OUTER window at the compositor level (Wayland layer-shell).
+# Complements (but is separate from) the CSS border-radius in style.css —
+# some Wayland compositors need this set here too for the corners to actually clip properly.
+outer_margin=0
+
+# Whether typing case matters when filtering results.
+# false = "fire" also matches "Firefox" (recommended, less friction)
+insensitive=true
+
+# Whether to parse and show icons for entries.
+# This MUST be true for app icons to render at all in drun mode.
+allow_images=true
+
+# Pixel size to render icons at. 24-32 is a good range for a compact launcher.
+image_size=32
+
+# Show or hide the search/filter text as you type.
+# true = you see your own query rendered in the input bar (normal expectation)
+show_all=false
+
+# Sort results by how recently/frequently you've launched them (usage-based ranking)
+# rather than pure alphabetical/fuzzy-match order. Makes frequently used apps
+# bubble to the top over time. Recommended on for a snappier daily-driver feel.
+sort_order=default
+
+# Enables fuzzy matching (e.g. "ffx" can match "Firefox") instead of requiring
+# an exact substring match. Much more forgiving to type with.
+matching=fuzzy
+
+# Hides the search bar's "Search..." placeholder prompt text if set to empty string,
+# or customize it to something else. Purely cosmetic.
+prompt=Search...
+
+# Terminal emulator wofi should use when launching terminal-based .desktop entries
+# (apps marked Terminal=true in their .desktop file, e.g. htop, vim-based launchers).
+# Set this to your actual terminal so those apps open correctly instead of failing silently.
+term=kitty
+
+# Filter out .desktop entries with NoDisplay=true or Hidden=true set
+# (system helper entries that shouldn't show in a normal launcher).
+filter_rate=100

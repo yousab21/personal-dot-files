@@ -1,0 +1,154 @@
+
+{
+    // ============================================================
+    // WAYBAR BEHAVIOR CONFIG
+    // Layout/behavior lives here. Colors/spacing/shape live in style.css.
+    // ============================================================
+
+    // "top" = bar docked to top edge. "bottom" also valid.
+    "layer": "top",
+    "position": "top",
+
+    // Bar's own height in px, BEFORE margins. Content (icons/text) sits inside this.
+    "height": 34,
+
+    // These three create the "detached floating rectangle" look you want —
+    // gaps between the bar and the screen edges on all sides except the bottom
+    // edge it's anchored to. Without these, the bar is flush/full-width like a normal panel.
+    "margin-top": 8,
+    "margin-left": 12,
+    "margin-right": 12,
+
+    // Explicit module layout — three zones, left/center/right.
+    // This list ONLY controls ORDER; visuals are entirely in style.css.
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "pulseaudio",
+        "battery",
+        "network",
+        "custom/power"
+        // right-to-left as you described = power is the last (leftmost of the right group),
+        // volume is first (rightmost). Waybar renders modules-right in the array order,
+        // left-to-right visually — so this order gives: [power] [network] [battery] [volume]
+        // reading left-to-right, which matches "left" being power in your right-to-left description.
+    ],
+
+    // ---------------- WORKSPACES ----------------
+    "hyprland/workspaces": {
+        // Only show workspaces that actually exist/have windows, not all 10 slots always.
+        "show-special": false,
+        // Don't sort purely numerically if you use named/special workspaces later; safe to leave true for now.
+        "sort-by-number": true,
+        // Format of the label INSIDE each workspace button. {id} = workspace number.
+        // We show the number always; CSS below hides it for non-active workspaces
+        // and shrinks them into plain dots instead.
+        "format": "{id}",
+        // Clicking a workspace indicator switches to it — standard expected behavior.
+        "on-click": "activate"
+    },
+
+    // ---------------- CLOCK ----------------
+    "clock": {
+        // Main bar text — 24h clock. Swap %H:%M for %I:%M %p if you prefer 12h with AM/PM.
+        "format": "{:%H:%M}",
+        // Hovering shows a full calendar popup (waybar has a BUILT-IN calendar tooltip, no script needed).
+        "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt>{calendar}</tt>",
+        // Left-click cycles the tooltip calendar's shown month forward — built-in waybar behavior.
+        "on-click": "shift_up",
+        // Right-click cycles it backward.
+        "on-click-right": "shift_down",
+        // Middle-click resets calendar back to current month.
+        "on-click-middle": "shift_reset"
+    },
+
+// ---------------- VOLUME / MIC ----------------
+"pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-icons": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+    ],
+    "format-muted": "󰝟 Muted",
+
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+
+    "tooltip-format": "Volume: {volume}%\nRight-click for full mixer"
+},
+
+// ---------------- BATTERY ----------------
+"battery": {
+    "states": {
+        "warning": 25,
+        "critical": 10
+    },
+
+    "format": "{icon} {capacity}%",
+
+    "format-icons": {
+        "charging": [
+            "󰢟",
+            "󰂉",
+            "󰂊",
+            "󰂋",
+            "󰂅"
+        ],
+        "default": [
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾"
+        ]
+    },
+
+    "tooltip-format": "{time} remaining ({capacity}%)",
+
+    "on-click": "~/.local/bin/power-profile-menu.sh"
+},
+
+// ---------------- NETWORK ----------------
+"network": {
+    "format-wifi": "{icon} {essid} ({signalStrength}%)",
+    "format-ethernet": "{icon} Wired",
+    "format-disconnected": "{icon} Disconnected",
+
+    "format-icons": {
+        "wifi": [
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
+        "ethernet": [
+            "󰈀"
+        ],
+        "disconnected": [
+            "󰤮"
+        ]
+    },
+
+    "tooltip-format-wifi": "{essid}\nSignal: {signalStrength}%\nIP: {ipaddr}",
+    "tooltip-format-ethernet": "Wired connection\nIP: {ipaddr}",
+
+    "on-click": "~/.local/bin/network-menu.sh",
+    "on-click-right": "nmcli device wifi rescan"
+},
+    // ---------------- POWER MENU ----------------
+    "custom/power": {
+        // This module's displayed text/icon is driven by a script's stdout, polled on an interval —
+        // that's how we get a live "idle lock enabled/disabled" INDICATOR here.
+        "exec": "~/.local/bin/power-status.sh",
+        // How often (seconds) waybar re-runs the script above to refresh the icon/state.
+        "interval": 5,
+        // Tells waybar to parse the script's output as JSON ({"text":..., "class":...})
+        // rather than plain text — needed so the idle-state class can drive CSS color.
+        "return-type": "json",
+        // Click opens the actual power menu (shutdown/reboot/toggle-idle).
+        "on-click": "~/.local/bin/power-menu.sh"
+    }
+}

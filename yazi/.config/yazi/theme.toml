@@ -1,0 +1,7 @@
+# Yazi's flavor system splits by color-scheme mode rather than a single
+# "use" key — dark/light are set independently so switching your terminal's
+# mode can pick a different flavor automatically. Setting both to the same
+# value here just means one flavor either way.
+[flavor]
+dark = "everforest-medium"
+light = "everforest-medium"

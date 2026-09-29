@@ -1,0 +1,85 @@
+/* ============================================================
+   WOFI VISUAL STYLING — Everforest Dark Medium
+   This is real GTK CSS — a subset of full web CSS. Selectors below
+   are wofi's specific internal widget names (not arbitrary class names
+   you invent — these come from wofi's own GTK widget tree).
+   ============================================================ */
+
+/* ---- COLOR PALETTE (Everforest Dark Medium reference) ----
+   Keeping these as a comment block since GTK CSS in this wofi version
+   doesn't support custom @define-color variables reliably everywhere —
+   safest to just hardcode the hex values below and reference this list
+   if you want to tweak something later.
+
+   bg0   #2d353b   -- darkest background
+   bg1   #343f44   -- slightly lighter background
+   bg2   #3d484d   -- entry/hover background
+   fg    #d3c6aa   -- primary foreground text
+   green #a7c080   -- accent / active border (matches your Hyprland active_border)
+   grey1 #859289   -- muted/secondary text
+   red   #e67e80   -- reserved, not used here but handy if you add a "kill process" mode later
+*/
+
+/* Outer window — the whole wofi popup itself */
+window {
+    background-color: rgba(45, 53, 59, 0.85); /* bg0 — solid, matches your lock screen's fallback bg color */
+    border: 4px solid #a7c080; /* green outline — same accent as your Hyprland active window border */
+    border-radius: 12px;       /* rounded corners — close to your Hyprland decoration.rounding = 10 */
+    font-family: "JetBrainsMono Nerd Font"; /* falls back to system default if this exact name isn't installed */
+    font-size: 14px;
+}
+
+/* The search/input text box at the top */
+#input {
+    margin: 10px;
+    padding: 8px 12px;
+    background-color: #343f44;   /* bg1 — one shade lighter than the window, visually separates it */
+    color: #d3c6aa;               /* fg */
+    border: 1px solid #425047;    /* muted inactive-style border, matches your Hyprland inactive_border */
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/* Input box when actively focused (cursor blinking in it) */
+#input:focus {
+    border: 1px solid #a7c080; /* green — same accent, confirms "you're typing here" */
+}
+
+/* The scrollable container holding all result rows */
+#inner-box {
+    margin: 5px;
+    background-color: transparent; /* let the window's own bg0 show through instead of double-layering */
+}
+
+/* Each individual result row (one app entry) */
+#entry {
+    padding: 8px;
+    border-radius: 8px;         /* rounded corners per-row too, consistent with the window's rounding */
+    /* transition = the ONE real "animation" GTK CSS gives us here —
+       smoothly interpolates the background-color change on hover/selection
+       instead of an instant hard cut. 150ms is snappy but still visibly smooth;
+       raise to 250-300ms for a more noticeable glide. */
+    transition: background-color 150ms ease-in-out;
+}
+
+/* Result row currently highlighted/selected (keyboard arrow or mouse hover) */
+#entry:selected {
+    background-color: #3d484d; /* bg2 — the "hover/active" shade in the palette */
+}
+
+/* App icon inside each entry */
+#img {
+    margin-right: 10px; /* spacing between icon and app name text */
+}
+
+/* App name text inside each entry */
+#text {
+    color: #d3c6aa; /* fg */
+}
+
+/* App name text specifically when that row is selected —
+   slightly brighten/accent it so selection is unambiguous even
+   if someone is colorblind to the background shift alone */
+#entry:selected #text {
+    color: #a7c080; /* green accent on the selected item's label */
+}
